@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Kakao Login -->
+    <string name="kakao_app_key">e57d3b7e9e86a285207543c1bbf57112</string>
+
+    <!-- Facebook -->
+    <string name="facebook_app_id">2103659349648971</string>
+    <string name="fb_login_protocol_scheme">fb2103659349648971</string>
+</resources>
