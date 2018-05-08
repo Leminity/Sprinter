@@ -7,9 +7,9 @@ import com.kakao.auth.ISessionCallback
 import com.kakao.auth.Session
 import com.kakao.util.exception.KakaoException
 
-class KakaoLogin(kakaoSessionCallback: IKakaoSessionCallback) : LifecycleObserver {
+class KakaoLoginLifeCycleObserver(kakaoLoginCallback: IKakaoLoginCallback) : LifecycleObserver {
 
-    private var mKakaoSessionCallback: IKakaoSessionCallback = kakaoSessionCallback
+    private var mKakaoLoginCallback: IKakaoLoginCallback = kakaoLoginCallback
     private lateinit var mKakaoCallback: SessionCallback
 
     @OnLifecycleEvent(Lifecycle.Event.ON_CREATE)
@@ -30,15 +30,15 @@ class KakaoLogin(kakaoSessionCallback: IKakaoSessionCallback) : LifecycleObserve
     private inner class SessionCallback : ISessionCallback {
 
         override fun onSessionOpened() {
-            mKakaoSessionCallback.onSessionOpend()
+            mKakaoLoginCallback.onSessionOpend()
         }
 
         override fun onSessionOpenFailed(exception: KakaoException?) {
-            mKakaoSessionCallback.onSessionOpenFailed(exception)
+            mKakaoLoginCallback.onSessionOpenFailed(exception)
         }
     }
 
-    public interface IKakaoSessionCallback {
+    public interface IKakaoLoginCallback {
         fun onSessionOpend()
         fun onSessionOpenFailed(exception: KakaoException?)
     }

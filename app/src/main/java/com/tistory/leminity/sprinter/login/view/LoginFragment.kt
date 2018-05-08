@@ -1,5 +1,6 @@
 package com.tistory.leminity.sprinter.login.view
 
+import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
@@ -15,10 +16,12 @@ import com.facebook.CallbackManager
 import com.facebook.FacebookCallback
 import com.facebook.FacebookException
 import com.facebook.login.LoginResult
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.kakao.util.exception.KakaoException
 import com.tistory.leminity.sprinter.R
-import com.tistory.leminity.sprinter.login.lifecycle.KakaoLogin
-import javax.xml.transform.Result
+import com.tistory.leminity.sprinter.login.lifecycle.GoogleLoginLifeCycleObserver
+import com.tistory.leminity.sprinter.login.lifecycle.KakaoLoginLifeCycleObserver
+
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -27,7 +30,8 @@ import javax.xml.transform.Result
 
 class LoginFragment : Fragment() {
 
-    private lateinit var mKakaoLogin: KakaoLogin
+    private lateinit var mKakaoLoginLifeCycleObserver: KakaoLoginLifeCycleObserver
+    private lateinit var mGoogleLoginLifeCycleObserver: GoogleLoginLifeCycleObserver
 
     private var listenerLogin: OnLoginFragmentListener? = null
 
@@ -36,8 +40,8 @@ class LoginFragment : Fragment() {
     private lateinit var mLoginButtonKakao: com.kakao.usermgmt.LoginButton
 
     @BindView(R.id.login_button_facebook)
-    private var mLoginButtonFacebook: com.facebook.login.widget.LoginButton ?= null
-    private var mCallbackManager: CallbackManager ?= null
+    private var mLoginButtonFacebook: com.facebook.login.widget.LoginButton? = null
+    private var mCallbackManager: CallbackManager? = null
 
     companion object {
         const val TAG = "LoginFragment"
@@ -71,6 +75,7 @@ class LoginFragment : Fragment() {
 
         registerLoginCallbackKakao()
         registerLoginCallbackFacebook()
+        registerLoginCallbackGoogle()
     }
 
     override fun onAttach(context: Context) {
@@ -98,19 +103,19 @@ class LoginFragment : Fragment() {
     }
 
     fun registerLoginCallbackKakao() {
-        mKakaoLogin = KakaoLogin(object : KakaoLogin.IKakaoSessionCallback {
+        mKakaoLoginLifeCycleObserver = KakaoLoginLifeCycleObserver(object : KakaoLoginLifeCycleObserver.IKakaoLoginCallback {
             override fun onSessionOpend() {
             }
 
             override fun onSessionOpenFailed(exception: KakaoException?) {
             }
         })
-        lifecycle.addObserver(mKakaoLogin)
+        lifecycle.addObserver(mKakaoLoginLifeCycleObserver)
 
     }
 
     fun unregisterLoginCallback() {
-        lifecycle.removeObserver(mKakaoLogin)
+        lifecycle.removeObserver(mKakaoLoginLifeCycleObserver)
 
     }
 
@@ -120,9 +125,9 @@ class LoginFragment : Fragment() {
         mLoginButtonFacebook?.setReadPermissions("email")
         mLoginButtonFacebook?.setFragment(this)
 
-        mLoginButtonFacebook?.registerCallback(mCallbackManager, object: FacebookCallback<LoginResult> {
+        mLoginButtonFacebook?.registerCallback(mCallbackManager, object : FacebookCallback<LoginResult> {
             override fun onSuccess(result: LoginResult?) {
-                var resultString = if(result == null) "empty" else result.toString()
+                var resultString = if (result == null) "empty" else result.toString()
                 Toast.makeText(context, resultString, Toast.LENGTH_LONG).show()
             }
 
@@ -132,6 +137,22 @@ class LoginFragment : Fragment() {
 
             override fun onError(error: FacebookException?) {
                 Toast.makeText(context, "error", Toast.LENGTH_LONG).show()
+            }
+        })
+    }
+
+    fun registerLoginCallbackGoogle() {
+        lifecycle.addObserver(GoogleLoginLifeCycleObserver(object: GoogleLoginLifeCycleObserver.IGoogleLoginCallback{
+            override fun getContext(): Context? {
+                return context
+            }
+
+            override fun getActivity(): Activity? {
+                return activity
+            }
+
+            override fun onExistSignedUser(googleSignInAccount: GoogleSignInAccount) {
+                Toast.makeText(context, "callback LoginFragment onExistSignedUser", Toast.LENGTH_LONG).show()
             }
         })
     }

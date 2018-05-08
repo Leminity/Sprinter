@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "1036703533336",
+    "firebase_url": "https://sprinter-114a1.firebaseio.com",
+    "project_id": "sprinter-114a1",
+    "storage_bucket": "sprinter-114a1.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1036703533336:android:e3813634d50b643a",
+        "android_client_info": {
+          "package_name": "com.tistory.leminity.sprinter"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1036703533336-92ohvck85a3jurp5hevh12f0l1sld7co.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.tistory.leminity.sprinter",
+            "certificate_hash": "20effd795677fb2dfb98e1b15cfbc42bf79aecab"
+          }
+        },
+        {
+          "client_id": "1036703533336-eeftbufnttu8m4lg5q5g3kod0ciga73e.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDkQuD8Fst4CMMdulfAhKSnkO8EMCXChok"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1036703533336-eeftbufnttu8m4lg5q5g3kod0ciga73e.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
